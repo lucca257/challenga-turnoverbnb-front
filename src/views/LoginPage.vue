@@ -21,6 +21,7 @@
                   name="login"
                   label="Login"
                   type="text"
+                  v-model="form.login"
               ></v-text-field>
               <v-text-field
                   id="password"
@@ -28,12 +29,13 @@
                   name="password"
                   label="Password"
                   type="password"
+                  v-model="form.password"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" to="/">Login</v-btn>
+            <v-btn color="primary" @click="submit">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -42,8 +44,28 @@
 </template>
 
 <script>
+
 export default {
-  name: "LoginPage"
+  name: "LoginPage",
+  data: () => ({
+    form: {
+      login: '',
+      password: ''
+    }
+  }),
+  methods : {
+    async submit() {
+      if(this.form.login === ''){
+        alert('login field is required')
+        return;
+      }
+      if(this.form.password === ''){
+        alert('password field is required')
+        return;
+      }
+      console.log(this.form)
+    }
+  }
 }
 </script>
 

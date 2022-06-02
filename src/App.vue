@@ -41,6 +41,7 @@ export default {
     return {
       menuItems: [
         { title: 'Home', path: '/', icon: 'home' },
+        { title: 'Login', path: '/login', icon: 'home' },
         { title: 'About', path: '/about', icon: 'home' },
       ]
     }
