@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="deep-purple accent-4" dark dense>
+  <v-app-bar app color="indigo" dark dense>
     <v-toolbar-title>
       <v-img
           alt="Logo"
@@ -12,7 +12,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn
-          color="deep-purple accent-4"
+          color="indigo"
           @click="$router.push({path: item.path})"
           v-for="item in menuItems"
           :key="item.title"
@@ -35,8 +35,8 @@ export default {
     return {
       menuItems: [
         { title: 'Balance', path: '/', icon: 'mdi-scale-unbalanced' },
-        { title: 'Incomes', path: '/', icon: 'mdi-arrow-up-right-bold' },
-        { title: 'Expenses', path: '/', icon: 'mdi-arrow-down-right-bold' },
+        { title: 'Incomes', path: '/incomes', icon: 'mdi-arrow-up-right-bold' },
+        { title: 'Expenses', path: '/expenses', icon: 'mdi-arrow-down-right-bold' },
         { title: 'Checks', path: '/checks', icon: 'mdi-cash-100' },
         { title: 'Logout', path: '/logout', icon: 'mdi-logout-variant' },
       ]
