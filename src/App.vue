@@ -3,14 +3,15 @@
     <topBarComponent></topBarComponent>
     <v-container fluid>
       <v-slide-y-transition mode="out-in">
-        <v-content>
+        <v-main>
           <router-view/>
-        </v-content>
+        </v-main>
       </v-slide-y-transition>
     </v-container>
   </v-app>
 </template>
 <script>
+
 export default {
   name: 'App',
   components : {
