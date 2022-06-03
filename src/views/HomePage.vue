@@ -10,7 +10,7 @@
     name: 'Home',
 
     components: {
-      'balanceComponent': () => import('@/components/BalanceComponent.vue'),
+      'balanceComponent': () => import('@/components/balance/BalanceComponent.vue'),
     },
   }
 </script>

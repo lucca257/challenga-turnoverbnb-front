@@ -1,9 +1,7 @@
 <template>
   <div class="justify-center">
     <v-card class="mx-auto">
-      <v-card-title>Current balance</v-card-title>
-      <v-card-subtitle>$ 6500,00</v-card-subtitle>
-
+      <balanceComponent />
       <v-list two-line>
         <v-list-item>
           <v-list-item-icon>
@@ -86,7 +84,9 @@
 <script>
 export default {
   name: "BalanceComponent",
-
+  components: {
+    'balanceComponent': () => import('@/components/balance/UserBalance.vue'),
+  },
   data () {
     return {
       transactions : [

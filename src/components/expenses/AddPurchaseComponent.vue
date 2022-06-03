@@ -1,15 +1,6 @@
 <template>
   <v-card>
-    <v-toolbar
-        dark
-        prominent
-        color="blue-grey darken-1"
-    >
-      <v-toolbar-title class="flex text-left">
-        <h3>Current balance</h3>
-        <h4>$ 6500,00</h4>
-      </v-toolbar-title>
-    </v-toolbar>
+    <balanceComponent />
     <v-card-text>
       <validation-observer ref="obs" v-slot="{passes}" slim>
         <v-form @submit.prevent="passes(save)">
@@ -76,7 +67,11 @@ export default {
     date: "",
     wc_menu: false
   }),
-  components: { ValidationObserver, ValidationProvider },
+  components: {
+    ValidationObserver,
+    ValidationProvider,
+    'balanceComponent': () => import('@/components/balance/UserBalance.vue'),
+  },
   methods: {
     save() {
       alert("add purchase")
