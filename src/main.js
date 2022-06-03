@@ -2,7 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
-import "vuetify/dist/vuetify.min.css";
+import "vuetify/dist/vuetify.min.css"
+import './plugins/validators'
 
 Vue.config.productionTip = false
 
