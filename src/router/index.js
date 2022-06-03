@@ -23,7 +23,7 @@ const routes = [
   {
     path: '/checks',
     name: 'checks',
-    component: () => import('../views/AboutView.vue')
+    component: () => import('../views/CheckPage.vue')
   },
   {
     path: '/login',
