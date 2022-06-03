@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/expenses',
     name: 'expenses',
-    component: () => import('../views/HomePage.vue')
+    component: () => import('../views/ExpensesPage.vue')
   },
 
   {
