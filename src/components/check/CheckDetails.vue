@@ -13,6 +13,7 @@
                   prepend-icon="mdi-account"
                   v-model="customer.name"
                   :error-messages="errors[0]"
+                  readonly
                   label="customer"
                   required
               />
@@ -22,6 +23,7 @@
                   prepend-icon="mdi-email"
                   v-model="customer.email"
                   :error-messages="errors[0]"
+                  readonly
                   label="customer email"
                   required
               />
@@ -31,6 +33,7 @@
                   prepend-icon="mdi-card-account-details-outline"
                   v-model="customer.account"
                   :error-messages="errors[0]"
+                  readonly
                   label="account"
                   required
               />
@@ -40,6 +43,7 @@
                   prepend-icon="mdi-cash"
                   v-model="customer.amount"
                   :error-messages="errors[0]"
+                  readonly
                   label="reported amount"
                   required
               />
