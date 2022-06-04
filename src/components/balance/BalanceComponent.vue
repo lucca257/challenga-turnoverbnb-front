@@ -1,5 +1,13 @@
 <template>
-  <div class="justify-center">
+  <div class="justify-center" v-if="depositCheck">
+    <depositCheck />
+  </div>
+
+  <div class="justify-center" v-else-if="addPurchase">
+    <addPurchase />
+  </div>
+
+  <div class="justify-center" v-else>
     <v-card class="mx-auto">
       <balanceComponent />
       <v-list two-line>
@@ -12,13 +20,13 @@
 
           <v-list-item-content>
             <v-list-item-title>Incomes</v-list-item-title>
-            <v-list-item-subtitle>$7110,00</v-list-item-subtitle>
+            <v-list-item-subtitle >$7110,00</v-list-item-subtitle>
           </v-list-item-content>
 
-          <v-list-item-content>
-            <v-list-item-title><v-icon class="ml-16 mb-1">mdi-plus</v-icon></v-list-item-title>
-            <v-list-item-subtitle class="ml-4">DEPOSIT A CHECK</v-list-item-subtitle>
-          </v-list-item-content>
+          <v-btn @click="depositCheck = true">
+            <v-icon>mdi-plus</v-icon>
+            DEPOSIT A CHECK
+          </v-btn>
         </v-list-item>
 
         <v-list-item>
@@ -33,10 +41,10 @@
             <v-list-item-subtitle>$780,00</v-list-item-subtitle>
           </v-list-item-content>
 
-          <v-list-item-content>
-            <v-list-item-title><v-icon class="ml-16 mb-1">mdi-plus</v-icon></v-list-item-title>
-            <v-list-item-subtitle class="ml-10">PURCHASE</v-list-item-subtitle>
-          </v-list-item-content>
+          <v-btn @click="addPurchase = true">
+            <v-icon>mdi-plus</v-icon>
+            <h4>PURCHASE</h4>
+          </v-btn>
         </v-list-item>
 
         <v-divider dark></v-divider>
@@ -86,9 +94,13 @@ export default {
   name: "BalanceComponent",
   components: {
     'balanceComponent': () => import('@/components/balance/UserBalance.vue'),
+    'depositCheck': () => import('@/components/check/DepositCheckComponent.vue'),
+    'addPurchase': () => import('@/components/expenses/AddPurchaseComponent.vue'),
   },
   data () {
     return {
+      depositCheck: false,
+      addPurchase: false,
       transactions : [
         {
           title: 'Salary',
