@@ -35,16 +35,14 @@
                 required
                 @change="onFileChange"
             />
-              <h4>Check deposit preview</h4>
-              <v-img :src="imageUrl" style="border: 1px dashed #add8e6; min-height: 250px" />
             </validation-provider>
+            <checkPreview :imageUrl="imageUrl"/>
             <v-btn type="submit" color="info" class="mt-3">ADD PURCHASE</v-btn>
           </v-form>
         </validation-observer>
       </v-container>
     </v-card-text>
   </v-card>
-
 </template>
 
 <script>
@@ -56,6 +54,7 @@ export default {
     ValidationObserver,
     ValidationProvider,
     'balanceComponent': () => import('@/components/balance/UserBalance.vue'),
+    'checkPreview': () => import('@/components/check/CheckPreviewComponent.vue'),
   },
   data: () => ({
     amount: "",
