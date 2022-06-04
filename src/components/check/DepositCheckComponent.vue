@@ -25,12 +25,20 @@
                   required
               />
             </validation-provider>
-            <v-file-input v-model="files" type="file" class="input" label="Upload check" hint="Add a picture of the check deposit" outlined dense @change="onFileChange" />
-            <v-col>
-              <h4>Check preview</h4>
-              <v-img :src="imageUrl" style="border: 1px dashed lightblue; min-height: 250px" />
-            </v-col>
-            <v-btn type="submit" color="info">ADD PURCHASE</v-btn>
+            <validation-provider name="upload check deposit" rules="required" v-slot="{errors}" slim>
+            <v-file-input
+                v-model="files"
+                type="file"
+                label="upload check deposit"
+                hint="Add a picture of the check deposit"
+                :error-messages="errors[0]"
+                required
+                @change="onFileChange"
+            />
+              <h4>Check deposit preview</h4>
+              <v-img :src="imageUrl" style="border: 1px dashed #add8e6; min-height: 250px" />
+            </validation-provider>
+            <v-btn type="submit" color="info" class="mt-3">ADD PURCHASE</v-btn>
           </v-form>
         </validation-observer>
       </v-container>
