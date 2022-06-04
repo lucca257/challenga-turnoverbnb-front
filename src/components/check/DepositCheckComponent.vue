@@ -37,6 +37,10 @@
             />
             </validation-provider>
             <checkPreview :imageUrl="imageUrl"/>
+            <v-btn class="mt-3" @click="cancel()">
+              <v-icon>mdi-alpha-x-circle</v-icon>
+              &nbsp; CANCEL
+            </v-btn> &nbsp;&nbsp;
             <v-btn type="submit" color="info" class="mt-3">ADD PURCHASE</v-btn>
           </v-form>
         </validation-observer>
@@ -63,6 +67,9 @@ export default {
     imageUrl:""
   }),
   methods: {
+    cancel() {
+      this.$parent.depositCheck = false;
+    },
     save() {
       alert("add purchase")
     },

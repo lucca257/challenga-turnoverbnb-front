@@ -49,6 +49,10 @@
                 required
             />
           </validation-provider>
+          <v-btn @click="cancel()">
+            <v-icon>mdi-alpha-x-circle</v-icon>
+            &nbsp; CANCEL
+          </v-btn> &nbsp;&nbsp;
           <v-btn type="submit" color="info">ADD PURCHASE</v-btn>
         </v-form>
       </validation-observer>
@@ -73,6 +77,9 @@ export default {
     'balanceComponent': () => import('@/components/balance/UserBalance.vue'),
   },
   methods: {
+    cancel() {
+      this.$parent.addPurchase = false;
+    },
     save() {
       alert("add purchase")
     }

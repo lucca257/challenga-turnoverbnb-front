@@ -49,7 +49,7 @@
               />
             </validation-provider>
             <checkPreview :imageUrl="customer.imageUrl"/>
-            <v-btn class="mt-4">
+            <v-btn class="mt-4" @click="reject()">
               <v-icon>mdi-alpha-x-circle</v-icon>
               &nbsp; REJECT
             </v-btn> &nbsp;&nbsp;
@@ -85,7 +85,7 @@ export default {
 
   methods: {
     reject () {
-
+      this.$parent.checkDetails = false;
     },
     save () {
       alert("accept check")
