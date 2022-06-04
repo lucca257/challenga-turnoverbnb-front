@@ -1,5 +1,8 @@
 <template>
-  <v-card class="mx-auto">
+  <div v-if="checkDetails">
+    <checkDetails />
+  </div>
+  <v-card class="mx-auto" v-else>
     <v-card-title>
       <v-icon>mdi-checkbook</v-icon>
       &nbsp; Checks control
@@ -46,6 +49,9 @@
 <script>
 export default {
   name: "ChecksControlComponent",
+  components: {
+    'checkDetails': () => import('./CheckDetails.vue')
+  },
   data () {
     return {
       checkDetails: null,
