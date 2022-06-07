@@ -11,6 +11,7 @@
                   v-model="amount"
                   :error-messages="errors[0]"
                   label="amount"
+                  type="number"
                   required
               />
               <p class="font-weight-regular">*The money will be deposited in your account once the check is accepted</p>
@@ -70,8 +71,31 @@ export default {
     cancel() {
       this.$parent.depositCheck = false;
     },
-    save() {
-      alert("add purchase")
+    async save() {
+      const formData = new FormData();
+      formData.append('amount', this.amount);
+      formData.append('description', this.description);
+      formData.append('image', this.files);
+      console.log(formData)
+      await fetch(this.base_url+'customer/deposits', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+        },
+        body: formData
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        this.$router.go('/')
+      }).catch((err) => {
+        this.displayError = err.message;
+      })
     },
     onFileChange(file) {
       if (!file) {
