@@ -2,7 +2,7 @@
   <v-card class="mx-auto">
     <v-card-title>
       <v-icon>mdi-cash-100</v-icon>
-      Checks
+      &nbsp; Checks
     </v-card-title>
     <v-card-subtitle>June, 2022</v-card-subtitle>
 
@@ -31,25 +31,17 @@
             Title
           </th>
           <th class="text-left">
-            Date
-          </th>
-          <th class="text-left">
-            Hour
-          </th>
-          <th class="text-left">
-            Value
+            Amount
           </th>
         </tr>
         </thead>
         <tbody>
         <tr
-            v-for="item in transactions"
+            v-for="item in pending"
             :key="item.title"
         >
-          <td>{{ item.title }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.hour }}</td>
-          <td>{{ item.value }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.amount }}</td>
         </tr>
         </tbody>
       </template>
@@ -66,25 +58,17 @@
                     Title
                   </th>
                   <th class="text-left">
-                    Date
-                  </th>
-                  <th class="text-left">
-                    Hour
-                  </th>
-                  <th class="text-left">
-                    Value
+                    Amount
                   </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr
-                    v-for="item in transactions"
+                    v-for="item in accepted"
                     :key="item.title"
                 >
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.date }}</td>
-                  <td>{{ item.hour }}</td>
-                  <td>{{ item.value }}</td>
+                  <td>{{ item.description }}</td>
+                  <td>{{ item.amount }}</td>
                 </tr>
                 </tbody>
               </template>
@@ -101,25 +85,17 @@
                     Title
                   </th>
                   <th class="text-left">
-                    Date
-                  </th>
-                  <th class="text-left">
-                    Hour
-                  </th>
-                  <th class="text-left">
-                    Value
+                    Amount
                   </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr
-                    v-for="item in transactions"
+                    v-for="item in rejected"
                     :key="item.title"
                 >
-                  <td>{{ item.title }}</td>
-                  <td>{{ item.date }}</td>
-                  <td>{{ item.hour }}</td>
-                  <td>{{ item.value }}</td>
+                  <td>{{ item.description }}</td>
+                  <td>{{ item.amount }}</td>
                 </tr>
                 </tbody>
               </template>
@@ -137,76 +113,49 @@ export default {
   data () {
     return {
       tab: null,
-      transactions : [
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        }
-      ],
+      transactions : [],
+      pending: [],
+      accepted: [],
+      rejected: [],
     }
   },
+  methods: {
+    async requestIncomes() {
+      const date = new Date()
+      await fetch(this.base_url+'customer/deposits/list', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          year: date.getFullYear(),
+          month: date.getMonth()+1
+        })
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        this.transactions = await response.json();
+        this.filterTransactions()
+      }).catch((err) => {
+        this.displayError = err.message;
+      })
+    },
+    filterTransactions() {
+      this.pending = this.transactions.filter(item => item.status === 'pending')
+      this.accepted = this.transactions.filter(item => item.status === 'accepted')
+      this.rejected = this.transactions.filter(item => item.status === 'rejected')
+    }
+  },
+  beforeMount() {
+    this.requestIncomes()
+  }
 }
 </script>
 
