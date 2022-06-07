@@ -33,15 +33,38 @@ export default {
   name: "TopBarComponent",
   data(){
     return {
-      menuItems: [
-        { title: 'Balance', path: '/', icon: 'mdi-scale-unbalanced' },
-        { title: 'Incomes', path: '/incomes', icon: 'mdi-arrow-up-right-bold' },
-        { title: 'Expenses', path: '/expenses', icon: 'mdi-arrow-down-right-bold' },
-        { title: 'Checks', path: '/checks', icon: 'mdi-cash-100' },
-        { title: 'Logout', path: '/logout', icon: 'mdi-logout-variant' },
-      ]
+      menuItems: []
     }
   },
+  methods: {
+    role(){
+      const role = localStorage.getItem('role');
+      console.log(role)
+      if(role === 'customer'){
+        this.menuItems = [
+          { title: 'Balance', path: '/', icon: 'mdi-scale-unbalanced' },
+          { title: 'Incomes', path: '/incomes', icon: 'mdi-arrow-up-right-bold' },
+          { title: 'Expenses', path: '/expenses', icon: 'mdi-arrow-down-right-bold' },
+          { title: 'Checks', path: '/checks', icon: 'mdi-cash-100' },
+          { title: 'Logout', path: '/logout', icon: 'mdi-logout-variant' },
+        ]
+      }
+      if(role === 'admin'){
+        this.menuItems = [
+          { title: 'Checks', path: '/admin/deposits', icon: 'mdi-cash-100' },
+          { title: 'Logout', path: '/logout', icon: 'mdi-logout-variant' }
+        ]
+      }
+    }
+  },
+  created:function(){
+    this.role();
+  },
+  watch: {
+    '$route' () {
+      this.role();
+    }
+  }
 }
 </script>
 

@@ -24,6 +24,7 @@ Vue.mixin({
       current_month: new Date().toLocaleString('default', { month: 'long' }),
     }
   },
+
   components: {
     ValidationObserver,
     ValidationProvider,

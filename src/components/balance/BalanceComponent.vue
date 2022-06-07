@@ -61,12 +61,6 @@
                 Title
               </th>
               <th class="text-left">
-                Date
-              </th>
-              <th class="text-left">
-                Hour
-              </th>
-              <th class="text-left">
                 Value
               </th>
             </tr>
@@ -77,10 +71,8 @@
                 :key="item.title"
             >
               <td>{{ item.description }}</td>
-              <td>{{ item.date }}</td>
-              <td>{{ item.hour }}</td>
               <td v-if="item.type === 'income'" style="color: cornflowerblue">$ {{ item.amount }}</td>
-              <td v-else style="color: red">$ -{{ item.amount }}</td>
+              <td v-else style="color: red">$ &nbsp; -{{ item.amount }}</td>
             </tr>
             </tbody>
           </template>
