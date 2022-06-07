@@ -76,10 +76,11 @@
                 v-for="item in transactions"
                 :key="item.title"
             >
-              <td>{{ item.title }}</td>
+              <td>{{ item.description }}</td>
               <td>{{ item.date }}</td>
               <td>{{ item.hour }}</td>
-              <td>{{ item.value }}</td>
+              <td v-if="item.type === 'income'" style="color: cornflowerblue">$ {{ item.amount }}</td>
+              <td v-else style="color: red">$ -{{ item.amount }}</td>
             </tr>
             </tbody>
           </template>
@@ -103,74 +104,60 @@ export default {
       addPurchase: false,
       transactions : [
         {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
+          id: 1,
+          user_id: 1,
+          type: 'income',
+          description: 'Lunch',
+          amount: '100.00',
+          date: 'none',
+          hour: 'none'
         },
         {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
+          id: 2,
+          user_id: 1,
+          type: 'expense',
+          description: 'Lunch',
+          amount: '100.00',
+          date: 'none',
+          hour: 'none'
         }
       ],
+      teste: null
     }
   },
+  methods: {
+    async requestTransactions() {
+      const date = new Date()
+      console.log(localStorage.getItem('access_token'))
+      await fetch(this.base_url+'customer/transactions', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+          year: date.getFullYear(),
+          month: date.getMonth()
+        })
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        this.transactions = await response.json();
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+  },
+  beforeMount() {
+    this.requestTransactions()
+  }
 }
 </script>
 
