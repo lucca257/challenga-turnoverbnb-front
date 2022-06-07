@@ -19,12 +19,6 @@
             Date
           </th>
           <th class="text-left">
-            Hour
-          </th>
-          <th class="text-left">
-            Value
-          </th>
-          <th class="text-left">
             Details
           </th>
         </tr>
@@ -34,11 +28,9 @@
             v-for="item in transactions"
             :key="item.title"
         >
-          <td>{{ item.title }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.hour }}</td>
-          <td>{{ item.value }}</td>
-          <td><v-icon @click="checkDetails = item.title">mdi-eye</v-icon></td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.amount }}</td>
+          <td><v-icon @click="checkDetails = item.id">mdi-eye</v-icon></td>
         </tr>
         </tbody>
       </template>
@@ -55,34 +47,35 @@ export default {
   data () {
     return {
       checkDetails: null,
-      transactions : [
-        {
-          title: 'customer 1',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'customer 2',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'customer 3',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'customer 4',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-      ],
+      transactions : [],
     }
   },
+  methods: {
+    async requestDeposits() {
+      await fetch(this.base_url+'admin/deposits', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json'
+        },
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        this.transactions = await response.json();
+      }).catch((err) => {
+        this.displayError = err.message;
+      })
+    }
+  },
+  beforeMount() {
+    this.requestDeposits()
+  }
 }
 </script>
 

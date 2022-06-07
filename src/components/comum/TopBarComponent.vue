@@ -39,7 +39,6 @@ export default {
   methods: {
     role(){
       const role = localStorage.getItem('role');
-      console.log(role)
       if(role === 'customer'){
         this.menuItems = [
           { title: 'Balance', path: '/', icon: 'mdi-scale-unbalanced' },
