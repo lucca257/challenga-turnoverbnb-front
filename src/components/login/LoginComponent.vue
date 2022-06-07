@@ -83,7 +83,7 @@ export default {
       this.$router.push("/");
     },
     isLoggedIn() {
-      if(localStorage.getItem('access_token') !== null) {
+      if(localStorage.getItem('access_token') !== null && localStorage.getItem('role') !== null) {
         this.redirectToRouteByRole();
       }
     }

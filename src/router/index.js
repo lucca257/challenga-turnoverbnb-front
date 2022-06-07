@@ -42,7 +42,7 @@ const routes = [
   {
     path: '/logout',
     name: 'logout',
-    component: () => import('../views/LoginPage')
+    component: () => import('../views/LogoutPage')
   }
 ]
 
