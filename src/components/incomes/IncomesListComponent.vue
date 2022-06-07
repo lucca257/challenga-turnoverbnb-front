@@ -1,5 +1,10 @@
 <template>
   <v-card class="mx-auto">
+    <v-alert type="warning"
+             :value="displayError"
+             dismissible>
+      {{displayError}}
+    </v-alert>
     <v-card-title>
       <v-icon>mdi-arrow-up-right-bold</v-icon>
       Incomes
@@ -16,9 +21,6 @@
             Date
           </th>
           <th class="text-left">
-            Hour
-          </th>
-          <th class="text-left">
             Value
           </th>
         </tr>
@@ -28,10 +30,9 @@
             v-for="item in transactions"
             :key="item.title"
         >
-          <td>{{ item.title }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.hour }}</td>
-          <td>{{ item.value }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.purchase_at }}</td>
+          <td>$ {{ item.amount }}</td>
         </tr>
         </tbody>
       </template>
@@ -44,75 +45,39 @@ export default {
   name: "incomesListComponent",
   data () {
     return {
-      transactions : [
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        },
-        {
-          title: 'Salary',
-          date: '01/01/2019',
-          hour: '10:00',
-          value: '$ 6500,00'
-        }
-      ],
+      transactions : [],
     }
   },
+  methods: {
+    async requestIncomes() {
+      const date = new Date()
+      await fetch(this.base_url+'customer/purchases/list', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          year: date.getFullYear(),
+          month: date.getMonth()+1
+        })
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        this.transactions = await response.json();
+      }).catch((err) => {
+        this.displayError = err.message;
+      })
+    }
+  },
+  beforeMount() {
+    this.requestIncomes()
+  }
 }
 </script>
