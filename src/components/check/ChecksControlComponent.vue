@@ -1,6 +1,6 @@
 <template>
   <div v-if="checkDetails">
-    <checkDetails />
+    <checkDetails :details="checkDetails"/>
   </div>
   <v-card class="mx-auto" v-else>
     <v-card-title>

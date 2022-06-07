@@ -2,7 +2,7 @@
   <v-card class="mx-auto">
     <v-card-title>
       <v-icon>mdi-card-account-details</v-icon>
-      &nbsp; Check details
+      &nbsp; Check details {{ details}}
     </v-card-title>
     <v-card-text>
       <v-container>
@@ -65,25 +65,59 @@
 </template>
 
 <script>
-import {ValidationObserver, ValidationProvider} from "vee-validate";
 import CheckPreview from "@/components/check/CheckPreviewComponent";
 export default {
   name: "CheckDetails",
-  components: { ValidationObserver, ValidationProvider, CheckPreview },
-  props: [],
+  components: { CheckPreview },
+  props: ['details'],
+  watch: {
+    details: {
+      immediate: true,
+      deep: true,
+      handler() {
+        this.requestDeposit()
+      }
+    }
+  },
   data () {
     return {
       customer: {
-        name: "pedro",
-        email: "mock@email.com",
-        account: "13456789",
-        amount: "9850.00",
+        name: "",
+        email: "",
+        account: "",
+        amount: "",
         imageUrl: "https://i.pinimg.com/originals/c8/04/f5/c804f569dfbd0fd73bf650d53e072001.jpg",
       },
+      test: null
     }
   },
 
   methods: {
+    async requestDeposit() {
+      await fetch(this.base_url+'admin/deposits/'+this.details, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json'
+        },
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        const data = await response.json();
+        this.customer.name = data.user.username;
+        this.customer.email = data.user.email;
+        this.customer.account = data.user.id;
+        this.customer.amount = data.amount;
+      }).catch((err) => {
+        this.displayError = err.message;
+      })
+    },
     reject () {
       this.$parent.checkDetails = false;
     },
