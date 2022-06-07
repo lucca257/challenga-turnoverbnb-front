@@ -31,7 +31,7 @@
                   />
                 </validation-provider>
                 <v-spacer />
-                <span>register</span> &nbsp;&nbsp;
+                <v-btn @click="register()">register</v-btn> &nbsp;&nbsp;
                 <v-btn type="submit" color="info">LOGIN</v-btn>
               </v-form>
             </validation-observer>
@@ -50,6 +50,9 @@ export default {
     password: 'password',
   }),
   methods: {
+    register() {
+      this.$router.push('/register');
+    },
     async submit() {
       console.log(this.base_url)
       await fetch(this.base_url+'auth/login', {
