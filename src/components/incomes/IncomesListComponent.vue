@@ -18,7 +18,7 @@
             Title
           </th>
           <th class="text-left">
-            Date
+            Status
           </th>
           <th class="text-left">
             Value
@@ -28,10 +28,10 @@
         <tbody>
         <tr
             v-for="item in transactions"
-            :key="item.title"
+            :key="item.id"
         >
           <td>{{ item.description }}</td>
-          <td>{{ item.purchase_at }}</td>
+          <td>{{ item.status }}</td>
           <td>$ {{ item.amount }}</td>
         </tr>
         </tbody>
@@ -51,7 +51,7 @@ export default {
   methods: {
     async requestIncomes() {
       const date = new Date()
-      await fetch(this.base_url+'customer/purchases/list', {
+      await fetch(this.base_url+'customer/deposits/list', {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
