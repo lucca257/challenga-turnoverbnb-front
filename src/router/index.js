@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import auth from './middleware/auth';
+import isAdmin from "@/router/middleware/isAdmin";
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,7 @@ const routes = [
     name: 'checklist',
     component: () => import('../views/ChecksControlPage'),
     meta: {
-      middleware: [auth]
+      middleware: [auth,isAdmin]
     }
   },
   {
