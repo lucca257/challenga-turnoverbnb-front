@@ -102,33 +102,12 @@ export default {
     return {
       depositCheck: false,
       addPurchase: false,
-      transactions : [
-        {
-          id: 1,
-          user_id: 1,
-          type: 'income',
-          description: 'Lunch',
-          amount: '100.00',
-          date: 'none',
-          hour: 'none'
-        },
-        {
-          id: 2,
-          user_id: 1,
-          type: 'expense',
-          description: 'Lunch',
-          amount: '100.00',
-          date: 'none',
-          hour: 'none'
-        }
-      ],
-      teste: null
+      transactions : []
     }
   },
   methods: {
     async requestTransactions() {
       const date = new Date()
-      console.log(localStorage.getItem('access_token'))
       await fetch(this.base_url+'customer/transactions', {
         method: 'POST',
         headers: {
@@ -138,7 +117,7 @@ export default {
 
         body: JSON.stringify({
           year: date.getFullYear(),
-          month: date.getMonth()
+          month: date.getMonth()+1
         })
       }).then(async (response) => {
         if (response.status !== 200) {

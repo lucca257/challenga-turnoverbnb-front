@@ -1,5 +1,10 @@
 <template>
   <v-container fluid fill-height>
+    <v-alert type="warning"
+             :value="displayError"
+             dismissible>
+      {{displayError}}
+    </v-alert>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
         <v-card class="elevation-12">

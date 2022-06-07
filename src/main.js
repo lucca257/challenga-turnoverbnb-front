@@ -18,6 +18,7 @@ new Vue({
 Vue.mixin({
   data: function() {
     return {
+      displayError: false,
       base_url: process.env.VUE_APP_API_BNB_BANK_URL
     }
   },

@@ -64,8 +64,7 @@ export default {
   data: () => ({
     username: '',
     password: 'password',
-    email: '@mail.com',
-    displayError: false
+    email: '@mail.com'
   }),
   methods: {
     async submit() {
