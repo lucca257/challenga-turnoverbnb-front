@@ -4,7 +4,7 @@
       <v-icon>mdi-arrow-down-right-bold</v-icon>
       Expenses
     </v-card-title>
-    <v-card-subtitle>June, 2022</v-card-subtitle>
+    <v-card-subtitle>{{current_month}}, {{current_year}}</v-card-subtitle>
     <v-simple-table>
       <template v-slot:default>
         <thead>

@@ -9,7 +9,7 @@
       <v-icon>mdi-arrow-up-right-bold</v-icon>
       Incomes
     </v-card-title>
-    <v-card-subtitle>June, 2022</v-card-subtitle>
+    <v-card-subtitle>{{current_month}}, {{current_year}}</v-card-subtitle>
     <v-simple-table>
       <template v-slot:default>
         <thead>

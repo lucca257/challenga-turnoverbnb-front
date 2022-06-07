@@ -4,7 +4,7 @@
       <v-icon>mdi-cash-100</v-icon>
       &nbsp; Checks
     </v-card-title>
-    <v-card-subtitle>June, 2022</v-card-subtitle>
+    <v-card-subtitle>{{current_month}}, {{current_year}}</v-card-subtitle>
 
     <v-tabs
         v-model="tab"

@@ -19,7 +19,9 @@ Vue.mixin({
   data: function() {
     return {
       displayError: false,
-      base_url: process.env.VUE_APP_API_BNB_BANK_URL
+      base_url: process.env.VUE_APP_API_BNB_BANK_URL,
+      current_year: new Date().getFullYear(),
+      current_month: new Date().toLocaleString('default', { month: 'long' }),
     }
   },
   components: {
