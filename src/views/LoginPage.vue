@@ -1,9 +1,5 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-        <loginComponent />
-    </v-layout>
-  </v-container>
+  <loginComponent />
 </template>
 
 <script>

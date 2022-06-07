@@ -5,7 +5,7 @@
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
             <v-toolbar-title>
-              <h2>Login</h2>
+              <h2>Register</h2>
             </v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -20,6 +20,16 @@
                       required
                   />
                 </validation-provider>
+                <validation-provider name="email" rules="required" v-slot="{errors}" slim>
+                  <v-text-field
+                      prepend-icon="mail"
+                      v-model="email"
+                      :error-messages="errors[0]"
+                      label="email"
+                      type="email"
+                      required
+                  />
+                </validation-provider>
                 <validation-provider name="password" rules="required" v-slot="{errors}" slim>
                   <v-text-field
                       prepend-icon="lock"
@@ -30,9 +40,8 @@
                       required
                   />
                 </validation-provider>
-                <v-spacer />
-                <span>register</span> &nbsp;&nbsp;
-                <v-btn type="submit" color="info">LOGIN</v-btn>
+                <v-spacer />&nbsp;&nbsp;
+                <v-btn type="submit" color="info">REGISTER</v-btn>
               </v-form>
             </validation-observer>
           </v-card-text>
@@ -44,30 +53,32 @@
 
 <script>
 export default {
-  name: "LoginComponent",
+  name: "RegisterComponent",
   data: () => ({
-    username: 'customer',
-    password: 'password',
+    username: '',
+    password: '',
+    email: ''
   }),
   methods: {
     async submit() {
       console.log(this.base_url)
-      await fetch(this.base_url+'auth/login', {
+      await fetch(this.base_url+'auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           username: this.username,
-          password: this.password
+          password: this.password,
+          email: this.email
         })
       }).then(async (response) => {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' +
-            response.status);
+              response.status);
           return;
         }
-        let data = await response.json();
+        const data = await response.json();
         localStorage.setItem('access_token', data.access_token);
         localStorage.setItem('role', data.role);
         this.redirectToRouteByRole();
@@ -87,9 +98,6 @@ export default {
         this.redirectToRouteByRole();
       }
     }
-  },
-  beforeMount(){
-    this.isLoggedIn()
   },
 }
 </script>

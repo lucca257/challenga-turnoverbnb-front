@@ -24,7 +24,6 @@ const routes = [
     name: 'expenses',
     component: () => import('../views/ExpensesPage.vue')
   },
-
   {
     path: '/checks',
     name: 'checks',
@@ -38,7 +37,7 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: () => import('../views/LoginPage')
+    component: () => import('../views/RegisterPage')
   },
   {
     path: '/logout',
