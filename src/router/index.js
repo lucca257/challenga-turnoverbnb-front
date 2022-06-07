@@ -10,7 +10,7 @@ const routes = [
     component: () => import('../views/HomePage.vue')
   },
   {
-    path: '/checklist',
+    path: '/admin/deposits',
     name: 'checklist',
     component: () => import('../views/ChecksControlPage')
   },
