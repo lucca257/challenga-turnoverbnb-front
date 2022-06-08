@@ -41,7 +41,7 @@
             :key="item.title"
         >
           <td>{{ item.description }}</td>
-          <td>{{ item.amount }}</td>
+          <td>${{ item.amount }}</td>
         </tr>
         </tbody>
       </template>
@@ -68,7 +68,7 @@
                     :key="item.title"
                 >
                   <td>{{ item.description }}</td>
-                  <td>{{ item.amount }}</td>
+                  <td>${{ item.amount }}</td>
                 </tr>
                 </tbody>
               </template>
@@ -95,7 +95,7 @@
                     :key="item.title"
                 >
                   <td>{{ item.description }}</td>
-                  <td>{{ item.amount }}</td>
+                  <td>${{ item.amount }}</td>
                 </tr>
                 </tbody>
               </template>
