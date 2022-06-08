@@ -86,7 +86,7 @@ export default {
         email: "",
         account: "",
         amount: "",
-        imageUrl: "https://i.pinimg.com/originals/c8/04/f5/c804f569dfbd0fd73bf650d53e072001.jpg",
+        imageUrl: "",
       },
       test: null
     }
@@ -114,6 +114,7 @@ export default {
         this.customer.email = data.user.email;
         this.customer.account = data.user.id;
         this.customer.amount = data.amount;
+        this.customer.imageUrl = this.base_url+"image/"+data.images.id;
       }).catch((err) => {
         this.displayError = err.message;
       })
