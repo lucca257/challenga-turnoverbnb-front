@@ -1,6 +1,6 @@
 <template>
   <div class="justify-center" v-if="depositCheck">
-    <depositCheck />
+    <depositCheck :balance="35"/>
   </div>
 
   <div class="justify-center" v-else-if="addPurchase">
@@ -20,7 +20,7 @@
 
           <v-list-item-content>
             <v-list-item-title>Incomes</v-list-item-title>
-            <v-list-item-subtitle >$7110,00</v-list-item-subtitle>
+            <v-list-item-subtitle>{{balances.total_incomes}}</v-list-item-subtitle>
           </v-list-item-content>
 
           <v-btn @click="depositCheck = true">
@@ -38,7 +38,7 @@
 
           <v-list-item-content>
             <v-list-item-title>Expenses</v-list-item-title>
-            <v-list-item-subtitle>$780,00</v-list-item-subtitle>
+            <v-list-item-subtitle>{{balances.total_expenses}}</v-list-item-subtitle>
           </v-list-item-content>
 
           <v-btn @click="addPurchase = true">
@@ -94,7 +94,12 @@ export default {
     return {
       depositCheck: false,
       addPurchase: false,
-      transactions : []
+      transactions : [],
+      balances: {
+        current_balance: 0,
+        total_incomes: 0,
+        total_expenses: 0,
+      }
     }
   },
   methods: {
@@ -124,10 +129,35 @@ export default {
       }).catch((err) => {
         console.log(err);
       })
-    }
+    },
+    async getBalance() {
+      await fetch(this.base_url+'customer/user/balance', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json'
+        },
+      }).then(async (response) => {
+        if (response.status !== 200) {
+          const errors = await response.json();
+          for (let prop in errors) {
+            this.displayError = errors[prop]
+            break;
+          }
+          return;
+        }
+        const data = await response.json();
+        this.balances.current_balance = data.current_balance
+        this.balances.total_incomes = data.total_incomes
+        this.balances.total_expenses = data.total_expenses
+      }).catch((err) => {
+        console.log(err);
+      })
+    },
   },
-  beforeMount() {
-    this.requestTransactions()
+  async beforeMount() {
+    await this.requestTransactions()
+    await this.getBalance()
   }
 }
 </script>
