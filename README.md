@@ -24,14 +24,14 @@ docker-compose up
 
 ### What I have done ?
 
-authentication
+#### authentication
 - [x] register user
 - [x] login user
 - [x] logout user
 - [x] middleware to check user token
 - [x] middleware to check user role
 
-customer
+#### customer
 - [x] list all transactions by user and date
 - [x] list all deposits by user and date
 - [x] create deposit
@@ -39,7 +39,7 @@ customer
 - [x] create purchase
 - [x] route to show user image
 
-admin
+#### admin
 - [x] list all pending deposits
 - [x] details of user deposit
 - [x] review user deposit
@@ -52,3 +52,15 @@ In this project, I have tried to create and reuse a lot of components to the max
 I would like to split some methods into services to reuse with other components and use vuex to store the state between components.
 
 I would like to do a battering style to have more compatibility with mobile.
+
+### login information ?
+
+to login as a customer:
+
+- username: customer
+- password: password
+
+to login as a admin:
+
+- username: admin
+- password: password
