@@ -5,6 +5,7 @@
         <v-card class="elevation-12">
           <v-card-text>
             <v-card-title>You signed out of your accont </v-card-title>
+            <v-card-subtitle><router-link to="/login">Want to login?</router-link></v-card-subtitle>
           </v-card-text>
         </v-card>
       </v-flex>

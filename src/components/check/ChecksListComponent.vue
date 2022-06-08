@@ -149,7 +149,7 @@ export default {
     },
     filterTransactions() {
       this.pending = this.transactions.filter(item => item.status === 'pending')
-      this.accepted = this.transactions.filter(item => item.status === 'accepted')
+      this.accepted = this.transactions.filter(item => item.status === 'confirmed')
       this.rejected = this.transactions.filter(item => item.status === 'rejected')
     }
   },
