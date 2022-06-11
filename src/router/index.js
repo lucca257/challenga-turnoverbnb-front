@@ -1,110 +1,107 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import auth from './middleware/auth';
-import isAdmin from "@/router/middleware/isAdmin";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'balance',
-    component: () => import('../views/HomePage.vue'),
-    meta: {
-      middleware: [auth]
-    }
+    redirect: 'dashboard',
   },
   {
-    path: '/admin/deposits',
-    name: 'checklist',
-    component: () => import('../views/ChecksControlPage'),
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/dashboard/Dashboard.vue'),
+  },
+  {
+    path: '/typography',
+    name: 'typography',
+    component: () => import('@/views/typography/Typography.vue'),
+  },
+  {
+    path: '/icons',
+    name: 'icons',
+    component: () => import('@/views/icons/Icons.vue'),
+  },
+  {
+    path: '/cards',
+    name: 'cards',
+    component: () => import('@/views/cards/Card.vue'),
+  },
+  {
+    path: '/simple-table',
+    name: 'simple-table',
+    component: () => import('@/views/simple-table/SimpleTable.vue'),
+  },
+  {
+    path: '/form-layouts',
+    name: 'form-layouts',
+    component: () => import('@/views/form-layouts/FormLayouts.vue'),
+  },
+  {
+    path: '/pages/account-settings',
+    name: 'pages-account-settings',
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
+  },
+  {
+    path: '/pages/login',
+    name: 'pages-login',
+    component: () => import('@/views/pages/Login.vue'),
     meta: {
-      middleware: [auth,isAdmin]
-    }
+      layout: 'blank',
+    },
+  },
+  {
+    path: '/pages/register',
+    name: 'pages-register',
+    component: () => import('@/views/pages/Register.vue'),
+    meta: {
+      layout: 'blank',
+    },
+  },
+  {
+    path: '/error-404',
+    name: 'error-404',
+    component: () => import('@/views/Error.vue'),
+    meta: {
+      layout: 'blank',
+    },
+  },
+  {
+    path: '*',
+    redirect: 'error-404',
+  },
+  {
+    path: '/balance',
+    name: 'balance',
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
   {
     path: '/incomes',
     name: 'incomes',
-    component: () => import('../views/IncomesPage.vue'),
-    meta: {
-      middleware: [auth]
-    }
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
   {
     path: '/expenses',
     name: 'expenses',
-    component: () => import('../views/ExpensesPage.vue'),
-    meta: {
-      middleware: [auth]
-    }
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
   {
     path: '/checks',
     name: 'checks',
-    component: () => import('../views/CheckPage.vue'),
-    meta: {
-      middleware: [auth]
-    }
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/LoginPage')
+    path: '/admin/deposits',
+    name: 'admin-deposits',
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/RegisterPage')
-  },
-  {
-    path: '/logout',
-    name: 'logout',
-    component: () => import('../views/LogoutPage')
-  }
 ]
-
- // Creates a `nextMiddleware()` function which not only // runs the default `next()` callback but also triggers
-// the subsequent Middleware function.
-function nextFactory(context, middleware, index) {
-  const subsequentMiddleware = middleware[index];
-  // If no subsequent Middleware exists,
-  // the default `next()` callback is returned.
-  if (!subsequentMiddleware) return context.next;
-
-  return (...parameters) => {
-    // Run the default Vue Router `next()` callback first.
-    context.next(...parameters);
-    // Then run the subsequent Middleware with a new
-    // `nextMiddleware()` callback.
-    const nextMiddleware = nextFactory(context, middleware, index + 1);
-    subsequentMiddleware({ ...context, next: nextMiddleware });
-  };
-}
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.middleware) {
-    const middleware = Array.isArray(to.meta.middleware)
-        ? to.meta.middleware
-        : [to.meta.middleware];
-
-    const context = {
-      from,
-      next,
-      router,
-      to,
-    };
-    const nextMiddleware = nextFactory(context, middleware, 1);
-
-    return middleware[0]({ ...context, next: nextMiddleware });
-  }
-
-  return next();
-});
 
 export default router
