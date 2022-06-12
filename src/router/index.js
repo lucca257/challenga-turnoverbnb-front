@@ -74,7 +74,7 @@ const routes = [
   {
     path: '/balance',
     name: 'balance',
-    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
+    component: () => import('@/views/pages/Customer/CustomerBalance.vue'),
   },
   {
     path: '/incomes',
@@ -94,6 +94,11 @@ const routes = [
   {
     path: '/admin/deposits',
     name: 'admin-deposits',
+    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
+  },
+  {
+    path: '/logout',
+    name: 'logout',
     component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   },
 ]
