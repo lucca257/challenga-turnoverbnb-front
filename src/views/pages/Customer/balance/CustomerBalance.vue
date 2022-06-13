@@ -2,19 +2,7 @@
   <v-row >
     <v-col
       md="12">
-      <v-card>
-        <v-card-title class="float-md-right">June, 2022</v-card-title>
-        <v-card-text class="my-12">
-          <div class="d-flex align-center">
-            <h1 class="text-4xl font-weight-semibold mt-3">
-              $24,895
-            </h1>
-          </div>
-          <h4 class="mt-2 font-weight-medium">
-            Current balance
-          </h4>
-        </v-card-text>
-      </v-card>
+      <current-balance />
     </v-col>
     <v-col>
       <v-card>
@@ -141,6 +129,9 @@ import { mdiArrowDownRightBold, mdiArrowUpRightBold, mdiSwapVerticalBold, mdiPlu
 
 export default {
   name: 'CustomerBalance',
+  components: {
+    'current-balance': () => import('./CurrentBalance.vue'),
+  },
   data() {
     return {
       transactions: [
@@ -189,43 +180,6 @@ export default {
         mdiSwapVerticalBold,
         mdiPlus,
       },
-      desserts: [
-        {
-          dessert: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6,
-          carbs: 24,
-          protein: 4,
-        },
-        {
-          dessert: 'Ice cream sandwich',
-          calories: 237,
-          fat: 6,
-          carbs: 24,
-          protein: 4,
-        },
-        {
-          dessert: 'Eclair',
-          calories: 262,
-          fat: 6,
-          carbs: 24,
-          protein: 4,
-        },
-        {
-          dessert: 'Cupcake',
-          calories: 305,
-          fat: 6,
-          carbs: 24,
-          protein: 4,
-        },
-        {
-          dessert: 'Gingerbread',
-          calories: 356,
-          fat: 6,
-          carbs: 24,
-          protein: 4,
-        },
-      ],
     }
   },
 }
