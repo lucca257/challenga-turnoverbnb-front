@@ -1,14 +1,14 @@
-FROM node:alpine
+FROM node:18-alpine3.15
 
 WORKDIR /usr/app
 
 COPY package*.json ./
 
-RUN npm install -g @vue/cli
+RUN npm install -g npm@8.12.1
 RUN npm install
 
-COPY . .
+COPY --chown=1000:www-data ./ .
 
 EXPOSE 8080
 
-CMD npm run serve
+ENTRYPOINT ["sh", "./start.sh"]
